@@ -15,8 +15,10 @@ is meant for self-hosting.
 
 # Setup
 
-Clone this repo and add a `people.json` file in the repo's root directory.
-Timezone codes for the `tz` field can be found [here](http://momentjs.com/timezone/).
+Clone this repo and add a `people.json` file in the repo's
+`data` directory.  Timezone codes for the `tz` field can be found
+[here](http://momentjs.com/timezone/).
+
 Each person object should have data in the following format:
 
 ```json
@@ -43,16 +45,35 @@ the environment variable, `PORT`.  i.e. `PORT=80` to use port 80.
 
 # Deploy
 
-This project is designed with a Procfile to deploy to a Heroku instance. Please
-check with Heroku's up to date documentation for any latest changes. You should
-be able to commit your changes in your forked repo (including adding your own
-people.json file) then run:
+This project is easily deployable on both Heroku and via docker.
+
+## Heroku
+
+This project is designed with a Procfile to deploy to a Heroku
+instance. Please check with Heroku's up to date documentation for any
+latest changes. You should be able to commit your changes in your forked
+repo (including adding your own people.json file) then run:
 
 ```bash
   $ heroku create
   $ git push heroku master
 ```
+## Docker
 
+With docker, build the image with the following command:
+
+```bash
+  $ docker build -t timezone .
+```
+
+You can run the command as follows:
+
+```bash
+  $ docker run -d -p 3000:3000 -v $PWD:/usr/src/app/data --name timezone timezone
+```
+
+**Note:** the `-p`, `-v` and `--name` argument are optional.  `-v`
+can be used to mount a directory with the `people.json` file.
 
 # Development
 
